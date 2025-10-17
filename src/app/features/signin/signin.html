@@ -1,0 +1,126 @@
+<div class="layout-container" fxLayout="column" fxFlexFill>
+  <header>
+    <app-top-nav></app-top-nav>
+  </header>
+  <div class="signin-container">
+    <div class="welcome-section">
+      <h2>{{'Welcome' | translate}}</h2>
+      <h4>{{'to Mission Town' | translate}}</h4>
+    </div>
+    <!-- Main Content -->
+    <div class="main-content">
+
+      <!-- Login Card -->
+      <div class="login-card">
+        <div class="hero-coin">
+          <img src="/golden_coin.svg" alt="Golden Coin" />
+        </div>
+        <h2 class="form-heading">{{'Log In' | translate}}</h2>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <!-- Mobile Number Section -->
+          <div class="mobile-section">
+            <div class="section-labels">
+              <span>{{'Country' | translate}}</span>
+              <span
+                [class.error-label]="
+                  loginForm.get('mobile')?.invalid &&
+                  (loginForm.get('mobile')?.touched || loginForm.get('mobile')?.dirty)
+                "
+                >{{'Mobile' | translate}}</span
+              >
+            </div>
+
+            <div class="mobile-input-group">
+              <mat-form-field class="country-code" appearance="outline">
+                <mat-select formControlName="countryCode" id="country-code-select">
+                  <mat-option *ngFor="let country of countryCodes" [value]="country.code">
+                    {{ country.code }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field class="mobile-number" appearance="outline">
+                <input
+                  matInput
+                  formControlName="mobile"
+                  placeholder="987654321"
+                  type="tel"
+                  maxlength="10"
+                />
+                <mat-error *ngIf="loginForm.get('mobile')?.hasError('required')">
+                  Mobile number is required
+                </mat-error>
+                <mat-error *ngIf="loginForm.get('mobile')?.hasError('pattern')">
+                  Please enter a valid 10-digit mobile number
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <!-- Password Section -->
+          <div class="password-section">
+            <div class="section-labels">
+              <span
+                [class.error-label]="
+                  loginForm.get('password')?.invalid &&
+                  (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)
+                "
+                >{{'Password' | translate}}</span
+              >
+            </div>
+
+            <mat-form-field class="password-field" appearance="outline">
+              <input
+                matInput
+                [type]="hidePassword ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="xxxxxxxxxx"
+              />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="togglePasswordVisibility()"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hidePassword"
+              >
+                <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+              </button>
+              <mat-error *ngIf="loginForm.get('password')?.hasError('required')">
+                Password is required
+              </mat-error>
+              <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">
+                Password must be at least 6 characters
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <!-- Remember Me and Forgot Password -->
+          <div class="form-options">
+            <mat-checkbox formControlName="rememberMe">{{'Remember me' | translate}}</mat-checkbox>
+            <a href="#" class="forgot-password">{{'Forgot password' | translate}}</a>
+          </div>
+
+          <!-- Login Button -->
+        </form>
+      </div>
+    </div>
+  </div>
+  <footer class="footer">
+    <button
+      mat-raised-button
+      (click)="onSubmit()"
+      type="submit"
+      class="login-button"
+      [disabled]="loginForm.invalid"
+    >
+      {{'Log In' | translate}}
+    </button>
+    <!-- Sign Up Link -->
+    <div class="signup-link">
+      <span>{{"Don't have an account" | translate}} </span>
+      <a href="#" class="signup-text"> {{'Sign Up' | translate}}</a>
+    </div>
+  </footer>
+</div>
