@@ -1,20 +1,29 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { Deposit } from '../deposit/deposit';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, Deposit],
   templateUrl: './home.html',
   styleUrl: './home.scss'
 })
 export class Home implements OnInit, OnDestroy {
 
+  constructor(private router: Router) { }
+
+
+  @ViewChild('depositModal') depositModal!: Deposit;
+
   carouselImages = [
-    '/corousle1.svg',
-    '/corousle1.svg',
-    '/corousle1.svg'
+    '/corosule1.svg',
+    '/corosule2.svg',
+    '/corosule3.svg',
+    '/corosule4.svg'
   ];
 
   walletActions = [
@@ -26,6 +35,8 @@ export class Home implements OnInit, OnDestroy {
 
   currentIndex = 0;
   intervalId: any;
+  showSupport = false;
+
 
   get currentImage() {
     return this.carouselImages[this.currentIndex];
@@ -33,6 +44,26 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.startCarousel();
+  }
+
+  onWalletAction(label: string) {
+    if (label === 'Deposit') {
+      this.depositModal.openModal();
+    } else if (label === 'Withdrawal') {
+      this.router.navigate(['/withdraw']);
+    } else if (label === 'History') {
+      this.router.navigate(['/history']);
+    } else if (label === 'Support') {
+      this.openSupportPopup();
+    }
+  }
+
+  openSupportPopup() {
+    this.showSupport = true;
+  }
+
+  closeSupportPopup() {
+    this.showSupport = false;
   }
 
   startCarousel() {
