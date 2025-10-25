@@ -10,6 +10,10 @@ import { Signin } from './features/signin/signin';
 import { Signup } from './features/signup/signup';
 import { VerifyEmail } from './features/verify-email/verify-email'
 import { EmailConfirmation } from './features/email-confirmation/email-confirmation'
+import { Withdrawal } from './features/withdrawal/withdrawal'
+import { History } from './features/history/history'
+import { Commision } from './features/commision/commision'
+import { Members } from './features/members/members'
 
 
 export const routes: Routes = [
@@ -18,6 +22,10 @@ export const routes: Routes = [
    { path: 'signup', component: Signup },
    { path: 'verify-email', component: VerifyEmail },
    { path: 'email-confirm', component: EmailConfirmation },
+   { path: 'withdraw', component: Withdrawal },
+   { path: 'history', component: History },
+   { path: 'commission', component: Commision },
+   { path: 'members', component: Members },
 {
     path: '',
     component: Layout,
@@ -27,6 +35,7 @@ export const routes: Routes = [
       { path: 'game', component: Game },
       { path: 'team', component: Team },
       { path: 'profile', component: Profile },
+      
     ],
   },
   { path: '**', redirectTo: '' },
